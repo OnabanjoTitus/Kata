@@ -54,8 +54,40 @@ public class NumberUtilities {
         return word;
     }
 
-    public static  String whatIsTheTime(){
-        return tellTheTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+    public static  String whatIsTheCurrentTime(){
+          return tellTheTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+    }
+
+    public static String greetUser(){
+        return "Good " + whatIsTheTimeOfDay(LocalTime.now().format((DateTimeFormatter.ofPattern("HH:mm")))) +" "+ whatIsTheNameOfTheOwnerOfThisComputer();
+    }
+    private static String whatIsTheNameOfTheOwnerOfThisComputer(){
+        return System.getProperty("user.name");
+    }
+    private static String whatIsTheTimeOfDay(String systemTime){
+        String[] timeParts = systemTime.split(":");
+        int hour =Integer.parseInt(timeParts[0]);
+        int minutes = Integer.parseInt(timeParts[1]);
+        if(hour == 12 && minutes == 0){
+            return "Noon";
+        }
+        else if((hour == 24 || hour ==0) && minutes == 0){
+            return "Mid-Night";
+        }
+        else return (whatIsTheTimeOfDayHelper(hour));
+        
+    }
+    private static String whatIsTheTimeOfDayHelper(int hourOfTheDay){
+        if(hourOfTheDay >=0 && hourOfTheDay<12){
+            return "Morning";
+        }
+        if(hourOfTheDay>=12 && hourOfTheDay<18){
+            return "Afternoon";
+        }
+        else {
+            return "Evening";
+        }
+
     }
 
     private static String convertUnitsToWords(int number){
