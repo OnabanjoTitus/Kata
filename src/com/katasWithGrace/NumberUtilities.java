@@ -1,4 +1,4 @@
-package com.practiceWithGrace;
+package com.katasWithGrace;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -33,27 +33,22 @@ public class NumberUtilities {
         }
 
         if(minutes>0 && minutes < 10){
-         stringTime =  "It's "+ numberToWord(hour) + " O'"+ numberToWord(minutes);
+         stringTime =  "It's "+ convertTimeDigitsToWordHelper(hour) + " O'"+ convertTimeDigitsToWordHelper(minutes);
         }
         else {
 
-            stringTime = "It's " + numberToWord(hour) + " " + numberToWord(minutes);
+            stringTime = "It's " + convertTimeDigitsToWordHelper(hour) + " " + convertTimeDigitsToWordHelper(minutes);
         }}
         return stringTime;
     }
 
-    private static String numberToWord(int number){
+    private static String convertTimeDigitsToWordHelper(int number){
         String word = "O' clock";
         if(number>0 && number <= 10){
-            word = unit[number];
+            word = convertUnitsToWords(number);
         }
-     if(number>10 && number <= 20){
-            word = tens[number%10];
-        }
-
-        if(number>20){
-            word = hundreds[Integer.parseInt(String.valueOf(String.valueOf(number).charAt(0)))];
-            word = word + "-" +unit[Integer.parseInt(String.valueOf(String.valueOf(number).charAt(1)))];
+     if(number>10){
+        return convertTensToWords(number);
         }
 
         return word;
@@ -63,26 +58,42 @@ public class NumberUtilities {
         return tellTheTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
     }
 
+    private static String convertUnitsToWords(int number){
+        return unit[number];
+    }
+    private static String convertUnitsToWords(String stringNumber){
+        return convertUnitsToWords(Integer.parseInt(stringNumber));
+    }
+    private static String convertTensToWords(String number) {
+        return convertTensToWords(Integer.parseInt(number));
+    }
 
+    private static String convertTensToWords(int number) {
+
+        if (String.valueOf(number).length() == 2) {
+
+            if (number >= 10 && number <= 19) {
+                return tens[(number) % 10];
+            } else {
+                String result = hundreds[Integer.parseInt(String.valueOf(String.valueOf(number).charAt(0)))];
+                final var secondDigit = Integer.parseInt(String.valueOf(String.valueOf(number).charAt(1)));
+                if (secondDigit == 0) {
+                    return result;
+                } else {
+
+                    return result + "-" + unit[secondDigit];
+                }
+            }
+        }
+        return null;
+    }
     public static String convertNumberToWord(String userInput){
         int lengthOfNumber = userInput.length();
         if(lengthOfNumber== 1){
-            return unit[Integer.parseInt(userInput)];
+            return convertUnitsToWords(userInput);
         }
         if(lengthOfNumber== 2){
-            int numberFromUserInput = Integer.parseInt(userInput);
-            if(numberFromUserInput>=10 && numberFromUserInput<19){
-            return tens[(Integer.parseInt(userInput))%10];}
-            else{
-                String result = hundreds[Integer.parseInt(String.valueOf(String.valueOf(userInput).charAt(0)))];
-                final var secondDigit = Integer.parseInt(String.valueOf(String.valueOf(userInput).charAt(1)));
-                if(secondDigit ==0){
-                    return result;
-                }
-                else{
-
-                return result + "-" +unit[secondDigit];}
-            }
+           return convertTensToWords(userInput);
         }
 
         return null;
