@@ -1,4 +1,4 @@
-package com.eagles.dictionary;
+package com.dictionary.dictionary;
 
 public interface DictionaryInterface {
 

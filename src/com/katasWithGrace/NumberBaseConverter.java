@@ -1,4 +1,4 @@
-package com.practiceWithGrace;
+package com.katasWithGrace;
 
 public class NumberBaseConverter {
     public static int convertBinaryToBaseTen(String number) {

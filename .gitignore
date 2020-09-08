@@ -657,3 +657,18 @@ dist/
 nbdist/
 .nb-gradle/
 
+.gitignore
+.idea/.gitignore
+.idea/codeStyles/
+.idea/misc.xml
+.idea/rSettings.xml
+creditCardVerification.uml
+src/cardGame/
+src/com/airlineReservation/
+src/com/cardGame/
+src/com/creditCardVerification/
+src/com/dictionary/dependencies/data.json
+src/com/dictionary/dependencies/webster.json
+src/com/dictionary/dictionary/
+src/com/katasWithGrace/
+test/

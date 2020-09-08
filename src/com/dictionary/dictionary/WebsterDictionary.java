@@ -1,28 +1,34 @@
-package com.eagles.dictionary;
+package com.dictionary.dictionary;
 
 import java.io.IOException;
 import java.util.List;
 
-public class QuickDictionary extends Dictionary{
-    public QuickDictionary() throws IOException {
-        super("src/com/eagles/dependencies/data.json");
+public class WebsterDictionary extends Dictionary {
+    public WebsterDictionary() throws IOException {
+        super("src/com/eagles/dependencies/webster.json");
     }
 
+    @Override
+    public String searchWord(String word) {
+        if (checkIfWordExist(word.toLowerCase())) {
+            return displaySearchResults(dictionaryFiles.get(word.toLowerCase()).toString());
+            //return dictionaryFiles.get(word.toLowerCase());
+        } else {
+            return "Word not in database";
+        }
 
+    }
 
     @Override
-    public String displaySearchResults(String results) {
+    protected String displaySearchResults(List<String> strings) {
         return null;
     }
 
-    public String displaySearchResults(List<String> results){
-        StringBuilder processedResult;
-        StringBuilder dismantledList = new StringBuilder();
-        for (String result : results) {
-            dismantledList.append(result);
-        }
-        String[] nounAndVerb = (dismantledList.toString()).split("[\\r?\\n]{1,2}");
+    @Override
+    public String displaySearchResults(String results) {
+        String[] nounAndVerb = results.split("[\\r?\\n]{1,2}"); //split by new line to separate nouns and verbs
         String[] noun = nounAndVerb[0].split("[0-9]+.\\s+");
+
         StringBuilder result = new StringBuilder();
         int counter = 1;
         result.append("<html><head><title>Dictionary Meaning</title></head><body>");
@@ -49,5 +55,8 @@ public class QuickDictionary extends Dictionary{
 
 
         return result.toString();
+
     }
-    }
+
+
+}

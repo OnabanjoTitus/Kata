@@ -1,4 +1,4 @@
-package com.eagles.dictionary;
+package com.dictionary.dictionary;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

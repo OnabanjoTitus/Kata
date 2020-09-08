@@ -1,4 +1,4 @@
-package com.eagles.dictionary;
+package com.dictionary.dictionary;
 
 import javax.swing.*;
 import java.io.IOException;
