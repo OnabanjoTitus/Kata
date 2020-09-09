@@ -177,18 +177,19 @@ public class NumberUtilities {
     }
 
     public static String convertAnyNumberToWords(String number){
-
-        return null;
+       return convertAnyNumberToWords(BigDecimal.valueOf(Double.parseDouble(number)));
     }
-    public static String connvertAnyNumberToWords(Double number){
-        return null;
+    public static String convertAnyNumberToWords(Double number){
+      return  convertAnyNumberToWords(BigDecimal.valueOf(number));
+
     }
     public static String convertAnyNumberToWords(int number){
-        return null;
+        return convertAnyNumberToWords(Double.valueOf(number));
     }
 
     public static String convertAnyNumberToWords(long number){
-        return null;
+        return convertAnyNumberToWords(BigDecimal.valueOf(number));
+
 
     }
     public static String convertAnyNumberToWords(BigDecimal number){
