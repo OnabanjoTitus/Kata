@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class NumberUtilitiesTest {
@@ -196,7 +198,7 @@ result = NumberUtilities.tellTheTime("04:13");
     void numberUtilitiesCanTellHundredCorrectly(){
         String result = NumberUtilities.convertNumberToWord("125");
         System.out.println(result);
-        assertEquals("One Hundred and Twenty Five", result);
+        assertEquals("One Hundred and Twenty-Five", result);
 
 
         result = NumberUtilities.convertNumberToWord("530");
@@ -222,6 +224,59 @@ result = NumberUtilities.tellTheTime("04:13");
     }
 
 
+    @Test
+    void numberUtilitiesCanTellAnyNumberCorrectly(){
+        String result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(34569));
+        System.out.println(result);
+        assertEquals("Thirty-Four Thousand, Five Hundred and Sixty-Nine", result);
+
+
+        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(18000000));
+        System.out.println(result);
+        assertEquals("Eighteen Million.", result);
+
+        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(502));
+        System.out.println(result);
+        assertEquals("Five Hundred and Two", result);
+
+
+
+        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(000));
+        System.out.println(result);
+        assertEquals("Zero", result);
+
+                result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(1_502_938_593));
+        System.out.println(result);
+        assertEquals("One Billion, Five Hundred and Two Million, Nine Hundred and Thirty-Eight Thousand, Five Hundred and Ninety-Three", result);
+
+        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(1_502_938_593.34));
+        System.out.println(result);
+        assertEquals("One Billion, Five Hundred and Two Million, Nine Hundred and Thirty-Eight Thousand, Five Hundred and Ninety-Three point Thirty-Four", result);
+
+        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(18000023));
+        System.out.println(result);
+        assertEquals("Eighteen Million and Twenty-Three", result);
+
+
+
+//
+//        result = NumberUtilities.convertNumberToWord("685");
+//        System.out.println(result);
+//        assertEquals("Six Hundred and Eighty-Five", result);
+//
+//
+//        result = NumberUtilities.convertNumberToWord("956");
+//        System.out.println(result);
+//        assertEquals("Nine Hundred and Fifty-Six", result);
+//
+//
+//        result = NumberUtilities.convertNumberToWord("40");
+//        System.out.println(result);
+//        assertEquals("Forty", result);
+//
+//
+//
+    }
 
 
 

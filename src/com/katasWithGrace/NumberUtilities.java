@@ -1,12 +1,13 @@
 package com.katasWithGrace;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class NumberUtilities {
     static String[] unit = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight","Nine", "Ten" };
     static String[] tens = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen","Nineteen", "Twenty" };
-    static String[] hundreds = {"Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty","Ninety", "Hundred" };
+    static String[] tensHigherThanTwenty = {"Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty","Ninety", "Hundred" };
     static String[]  thousands = {"Thousand", "Million", "Billion", "Trillion", "Quadrillion", "Pentallion"};
 
 
@@ -62,7 +63,7 @@ public class NumberUtilities {
         return "Good " + whatIsTheTimeOfDay(LocalTime.now().format((DateTimeFormatter.ofPattern("HH:mm")))) +" "+ whatIsTheNameOfTheOwnerOfThisComputer();
     }
     private static String whatIsTheNameOfTheOwnerOfThisComputer(){
-        return System.getProperty("user.name");
+         return System.getProperty("user.name");
     }
     private static String whatIsTheTimeOfDay(String systemTime){
         String[] timeParts = systemTime.split(":");
@@ -102,12 +103,15 @@ public class NumberUtilities {
 
     private static String convertTensToWords(int number) {
 
-        if (String.valueOf(number).length() == 2) {
+        if (String.valueOf(number).length() <= 2) {
+            if(number<10 && number >0){
+                return unit[number];
 
+            }
             if (number >= 10 && number <= 19) {
                 return tens[(number) % 10];
             } else {
-                String result = hundreds[Integer.parseInt(String.valueOf(String.valueOf(number).charAt(0)))];
+                String result = tensHigherThanTwenty[Integer.parseInt(String.valueOf(String.valueOf(number).charAt(0)))];
                 final var secondDigit = Integer.parseInt(String.valueOf(String.valueOf(number).charAt(1)));
                 if (secondDigit == 0) {
                     return result;
@@ -120,15 +124,101 @@ public class NumberUtilities {
         return null;
     }
     public static String convertNumberToWord(String userInput){
-        int lengthOfNumber = userInput.length();
-        if(lengthOfNumber== 1){
-            return convertUnitsToWords(userInput);
+        String[] numberWithDecimal = userInput.split("\\.");
+        String treatedUserInput = "";
+        if(numberWithDecimal.length>1){
+            if(Integer.parseInt(numberWithDecimal[1])>0){
+                    return numberToWordHelper(numberWithDecimal[0]) + " point " + numberToWordHelper(numberWithDecimal[1]);
+            }
+            else{
+                return numberToWordHelper(numberWithDecimal[0]);
+            }
         }
-        if(lengthOfNumber== 2){
-           return convertTensToWords(userInput);
+        else{
+            return numberToWordHelper(userInput);
         }
 
+    }
+
+    private static String numberToWordHelper(String number){
+        String numberToWord ="";
+        int lengthOfNumber = number.length();
+        if(lengthOfNumber== 1){
+            numberToWord= convertUnitsToWords(number);
+        }
+        if(lengthOfNumber== 2){
+            if(Integer.parseInt(number)== 0){
+
+
+            }
+            numberToWord= convertTensToWords(number);
+        }
+        if(lengthOfNumber ==3){
+            if(Integer.parseInt(number)== 0){
+
+
+            }
+            else{
+                numberToWord= convertHundredsToWord(number);
+            }
+
+        }
+
+        return numberToWord;
+    }
+
+    private static String convertHundredsToWord(String userInput) {
+        if(Integer.parseInt(userInput.substring(0,1))==0){
+            return " and "+ convertTensToWords(userInput.substring(1));
+        }
+        else {
+            return convertUnitsToWords(userInput.substring(0, 1)) + " Hundred and " + convertTensToWords(userInput.substring(1));
+        }
+    }
+
+    public static String convertAnyNumberToWords(String number){
+
         return null;
+    }
+    public static String connvertAnyNumberToWords(Double number){
+        return null;
+    }
+    public static String convertAnyNumberToWords(int number){
+        return null;
+    }
+
+    public static String convertAnyNumberToWords(long number){
+        return null;
+
+    }
+    public static String convertAnyNumberToWords(BigDecimal number){
+        StringBuilder amountToWord = new StringBuilder();
+        String numberWithComma = String.format("%,.2f", number);
+        String[] numbersArray= numberWithComma.split(",");
+        int numberOfCommas = numbersArray.length;
+        System.out.println(numberOfCommas);
+        int thousandsCounter = numberOfCommas-2;
+        for(int i = 0; i<numberOfCommas-1; i++){
+
+
+            if(Integer.parseInt(numbersArray[i])==0){
+                amountToWord.replace(amountToWord.length()-2, amountToWord.length(), ".");
+            }else {
+                System.out.println(numbersArray[i]);
+                amountToWord.append(convertNumberToWord(numbersArray[i])).append(" ").append(thousands[thousandsCounter]).append(", ");
+
+
+
+
+            }
+
+
+
+            thousandsCounter--;
+
+        }
+        return amountToWord.append(convertNumberToWord(numbersArray[numberOfCommas-1])).toString();
+
     }
 
 }
