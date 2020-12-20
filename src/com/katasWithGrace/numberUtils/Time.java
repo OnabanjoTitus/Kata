@@ -4,9 +4,9 @@ public class Time {
     private int hour;
     private int minute;
 
-    public Time(){
-        this(0,0);
-    }
+//    public Time(){
+//        this(0,0);
+//    }
     public Time(int hour, int minute){
         if (isValidInput(hour, minute)){
         this.hour = hour;

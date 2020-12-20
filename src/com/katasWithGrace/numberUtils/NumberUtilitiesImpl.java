@@ -85,6 +85,11 @@ public class NumberUtilitiesImpl implements NumberUtilities {
 
     }
 
+    @Override
+    public String tellTheTime(int hour) {
+        return tellTheTimeHelper(new Time(hour));
+    }
+
     private static String tellTheTimeHelper(Time time) {
         String stringTime;
         int hour = time.getHour();

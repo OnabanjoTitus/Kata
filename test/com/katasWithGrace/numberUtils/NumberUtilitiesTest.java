@@ -36,6 +36,16 @@ class numberUtilitiesTest {
         System.out.println(result);
         assertEquals("It's Ten O' clock", result);
 
+        result = numberUtilities.tellTheTime(10);
+        System.out.println(result);
+        assertEquals("It's Ten O' clock", result);
+
+        result = numberUtilities.tellTheTime(new Time(10));
+        System.out.println(result);
+        assertEquals("It's Ten O' clock", result);
+
+
+
 
     }
 

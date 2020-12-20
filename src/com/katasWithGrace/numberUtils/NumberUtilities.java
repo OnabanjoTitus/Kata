@@ -20,4 +20,5 @@ public interface NumberUtilities {
     String convertAnyNumberToWords(long number);
     String convertAnyNumberToWords(BigDecimal number);
 
+    String tellTheTime(int hour);
 }
