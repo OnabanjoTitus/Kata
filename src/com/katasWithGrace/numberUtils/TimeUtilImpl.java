@@ -8,20 +8,20 @@ public class TimeUtilImpl implements TimeUtil{
 
     @Override
     public String tellTheTime(String hour, String minute) {
-        return tellTheTimeHelper(new Time(hour, minute));
+        return convertTimeToWordsHelper(new Time(hour, minute));
     }
 
     @Override
     public  String tellTheTime(String time) {
-        return tellTheTimeHelper(new Time(time));
+        return convertTimeToWordsHelper(new Time(time));
     }
     @Override
     public String tellTheTime(int hour, int minute) {
-        return tellTheTimeHelper(new Time(hour, minute));
+        return convertTimeToWordsHelper(new Time(hour, minute));
     }
     @Override
     public  String tellTheTime(Time time){
-        return tellTheTimeHelper(time);
+        return convertTimeToWordsHelper(time);
     }
 
     @Override
@@ -35,83 +35,92 @@ public class TimeUtilImpl implements TimeUtil{
 
     @Override
     public String tellTheTime(int hour) {
-        return tellTheTimeHelper(new Time(hour));
+        return convertTimeToWordsHelper(new Time(hour));
     }
 
-    private static String tellTheTimeHelper(Time time) {
-        String stringTime;
+    private static String convertTimeToWordsHelper(Time time) {
+        String timeInWords;
         int hour = time.getHour();
         int minute = time.getMinute();
-        if(hour >12){
+        boolean hourIsGreaterThanTwelve = hour>12;
+        if(hourIsGreaterThanTwelve){
             hour =hour %12;
         }
         if(hour == 0){
             hour =12;
         }
-
-        if(minute >0 && minute < 10){
-            stringTime =  "It's "+ convertTimeDigitsToWordHelper(hour) + " O'"+ convertTimeDigitsToWordHelper(minute);
+        boolean minutesIsLessThanTen = minute >0 && minute < 10;
+        if(minutesIsLessThanTen){
+            timeInWords =  "It's "+ getWordFrom(hour) + " O'"+ getWordFrom(minute);
         }
         else {
-
-            stringTime = "It's " + convertTimeDigitsToWordHelper(hour) + " " + convertTimeDigitsToWordHelper(minute);
+            timeInWords = "It's " + getWordFrom(hour) + " " + getWordFrom(minute);
         }
-        return stringTime;
+        return timeInWords;
     }
 
-    private static String convertTimeDigitsToWordHelper(int number){
-        String word = "O' clock";
-        if(number>0 && number <= 10){
-            word = numberUtilities.convertAnyNumberToWords(number);
+    private static String getWordFrom(int digit){
+        if(digit>0 && digit <=59 ){
+            return numberUtilities.convertAnyNumberToWords(digit);
         }
-        if(number>10){
-            return numberUtilities.convertAnyNumberToWords(number);
+        else
+        if(digit==0){
+            return "O' clock";
         }
-
-        return word;
+        else{
+            return "Invalid digits";
+        }
     }
 
-    private static String whatIsTheTimeOfDayHelper(int hourOfTheDay){
-        String result ="";
-        boolean isMorning = hourOfTheDay >=0 && hourOfTheDay<12;
-        boolean isAfternoon = hourOfTheDay>=12 && hourOfTheDay<18;
-        boolean isEvening = !isMorning && !isAfternoon;
-        if(isMorning){
-            result="Morning";
-        }
-        if(isAfternoon){
-            result="Afternoon";
-        }
-        if(isEvening) {
-            result="Evening";
-        }
-        return result;
+
+    private  String tellMeTheTimeOfTheDayFrom(Time time) {
+        String timeOfTheDay;
+        int hour = time.getHour();
+        timeOfTheDay = isItMidnightOrNoon(time);
+
+        if(timeOfTheDay.equals("It is neither"))
+            timeOfTheDay= (isItMorningAfternoonOrEvening(hour));
+
+        return timeOfTheDay;
     }
 
-    private static String whatIsTheTImeOfTheDayHelper(Time time) {
-        String result;
+    private String isItMidnightOrNoon(Time time){
+        String timeOfTheDay="";
         int hour = time.getHour();
         int minutes = time.getMinute();
         boolean isNoon = hour == 12 && minutes == 0;
         boolean isMidnight = (hour == 24 || hour ==0) && minutes == 0;
         if(isNoon){
-            result="Noon";
+            timeOfTheDay="Noon";
         }
         else if(isMidnight){
-            result="Mid-Night";
+            timeOfTheDay="Mid-Night";
         }
-
-        else result= (whatIsTheTimeOfDayHelper(hour));
-
-        return result;
+        else{timeOfTheDay = "It is neither";}
+        return timeOfTheDay;
     }
 
-    private static String whatIsTheNameOfTheOwnerOfThisComputer(){
+
+    private  String isItMorningAfternoonOrEvening(int hourOfTheDay){
+        String timeOfTheDay ="";
+        boolean isMorning = hourOfTheDay >=0 && hourOfTheDay<12;
+        boolean isAfternoon = hourOfTheDay>=12 && hourOfTheDay<18;
+        boolean isEvening = !isMorning && !isAfternoon;
+        if(isMorning) timeOfTheDay="Morning";
+
+        if(isAfternoon) timeOfTheDay="Afternoon";
+
+        if(isEvening) timeOfTheDay="Evening";
+
+        return timeOfTheDay;
+    }
+
+    private  String whatIsTheNameOfTheOwnerOfThisComputer(){
         return System.getProperty("user.name");
     }
 
-    private static String whatIsTheTimeOfDay(String time){
-        return whatIsTheTImeOfTheDayHelper(new Time(time));
+    private String whatIsTheTimeOfDay(String time){
+        return tellMeTheTimeOfTheDayFrom(new Time(time));
     }
 
 
