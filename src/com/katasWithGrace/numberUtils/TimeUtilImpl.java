@@ -60,16 +60,12 @@ public class TimeUtilImpl implements TimeUtil{
     }
 
     private static String getWordFrom(int digit){
-        if(digit>0 && digit <=59 ){
-            return numberUtilities.convertAnyNumberToWords(digit);
-        }
-        else
-        if(digit==0){
-            return "O' clock";
-        }
-        else{
-            return "Invalid digits";
-        }
+        boolean digitsIsBetweenZeroAndFiftyNine = digit>0 && digit <=59;
+        if(digitsIsBetweenZeroAndFiftyNine) return numberUtilities.convertAnyNumberToWords(digit);
+
+        else if(digit==0) return "O' clock";
+
+        else return "Invalid digits";
     }
 
 
@@ -78,8 +74,7 @@ public class TimeUtilImpl implements TimeUtil{
         int hour = time.getHour();
         timeOfTheDay = isItMidnightOrNoon(time);
 
-        if(timeOfTheDay.equals("It is neither"))
-            timeOfTheDay= (isItMorningAfternoonOrEvening(hour));
+        if(timeOfTheDay.equals("It is neither")) timeOfTheDay= (isItMorningAfternoonOrEvening(hour));
 
         return timeOfTheDay;
     }
