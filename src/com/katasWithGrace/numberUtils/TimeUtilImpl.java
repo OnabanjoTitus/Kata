@@ -62,10 +62,10 @@ public class TimeUtilImpl implements TimeUtil{
     private static String convertTimeDigitsToWordHelper(int number){
         String word = "O' clock";
         if(number>0 && number <= 10){
-            word = numberUtilities.convertUnitsToWords(number);
+            word = numberUtilities.convertAnyNumberToWords(number);
         }
         if(number>10){
-            return numberUtilities.convertTensToWords(number);
+            return numberUtilities.convertAnyNumberToWords(number);
         }
 
         return word;
