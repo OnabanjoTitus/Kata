@@ -19,10 +19,14 @@ public class NumberUtilitiesImpl implements NumberUtilities {
 
     @Override
     public  String tellTheTime(String time) {
-        int hour;
-        int minutes;
+        int[] timeHourAndMinute = getHourAndMinuteFromString(time);
+        int hour = timeHourAndMinute[0];
+        int minutes = timeHourAndMinute[1];
+        return tellTheTime(hour, minutes);
+    }
+    private int[] getHourAndMinuteFromString(String time){
 
-        String[] timeArray = time.split(":");
+       String[] timeArray = time.split(":");
         if (timeArray.length < 2) {
             timeArray = time.split("\\.");
         }
@@ -30,14 +34,17 @@ public class NumberUtilitiesImpl implements NumberUtilities {
             timeArray = time.split(" ");
         }
         if (timeArray.length < 2) {
-            hour = Integer.parseInt(time);
-            minutes = 0;
-        } else {
+            timeArray = new String[2];
+            timeArray[0]= time;
+            timeArray[1] = "0";
 
-            hour = Integer.parseInt(timeArray[0]);
-            minutes = Integer.parseInt(timeArray[1]);
         }
-        return tellTheTime(hour, minutes);
+
+        int[] hourAndMinute = new int[2];
+        hourAndMinute[0]= Integer.parseInt(timeArray[0]);
+        hourAndMinute[1] = Integer.parseInt(timeArray[1]);
+
+        return hourAndMinute;
     }
 @Override
     public String tellTheTime(int hour, int minute) {
