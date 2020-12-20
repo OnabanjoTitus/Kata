@@ -43,27 +43,11 @@ public class Invoice {
 
     public void setPrice(double price) {
         if (price>0)this.price = price;
-
-//        if (price <0){
-//            this.price = 0.0;
-//        }
-//        else{
-//        this.price = price;
-//        }
     }
-
     public void setQuantityOfItemPurchased(int quantityOfItemPurchased) {
-        if(quantityOfItemPurchased>0)this.quantityOfItemPurchased = quantityOfItemPurchased;
-
-//
-//        if(quantityOfItemPurchased <0){
-//            this.quantityOfItemPurchased = 0;
-//        }
-//        else {
-//            this.quantityOfItemPurchased = quantityOfItemPurchased;
-//        }
+        if(quantityOfItemPurchased>0)
+            this.quantityOfItemPurchased = quantityOfItemPurchased;
     }
-
     public double getInvoiceAmount() {
         return price * quantityOfItemPurchased;
     }
