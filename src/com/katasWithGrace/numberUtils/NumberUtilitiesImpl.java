@@ -3,10 +3,10 @@ package com.katasWithGrace.numberUtils;
 import java.math.BigDecimal;
 
 public class NumberUtilitiesImpl implements NumberUtilities {
-    static String[] unit = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
-    static String[] teens = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"};
-    static String[] tens = {"Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety", "Hundred"};
-    static String[] thousands = {"Thousand", "Million", "Billion", "Trillion", "Quadrillion", "Pentallion"};
+     String[] unit = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+     String[] teens = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"};
+     String[] tens = {"Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety", "Hundred"};
+     String[] thousands = {"Thousand", "Million", "Billion", "Trillion", "Quadrillion", "Quintillion","Sextillion","Septillion", "Octillion", "Nonillion", "Decillion"};
 
     private  String convertTensToWordHelper(int number) {
         if (number < 10 && number > 0) {
@@ -82,11 +82,11 @@ public class NumberUtilitiesImpl implements NumberUtilities {
     }
 
     private String convertTensToWords(int number) {
-
+        String result = "";
         if (String.valueOf(number).length() <= 2) {
-            return convertTensToWordHelper(number);
+            result = convertTensToWordHelper(number);
         }
-        return null;
+        return result;
     }
 
     private String convertNumberToWordHelper(String[] numberWithDecimal) {
