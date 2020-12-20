@@ -13,9 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class numberUtilitiesTest {
 
     NumberUtilities numberUtilities;
+    TimeUtil timeUtil;
     @BeforeEach
     void setUp() {
         numberUtilities = new NumberUtilitiesImpl();
+        timeUtil = new TimeUtilImpl();
     }
 
     @AfterEach
@@ -24,23 +26,23 @@ class numberUtilitiesTest {
 
     @Test
     void numberUtilitiesCanTellTheTimeInHoursTest(){
-       String result = numberUtilities.tellTheTime("10 00");
+       String result = timeUtil.tellTheTime("10 00");
         System.out.println(result);
        assertEquals("It's Ten O' clock", result);
 
-        result = numberUtilities.tellTheTime(10, 00);
+        result = timeUtil.tellTheTime(10, 00);
         System.out.println(result);
         assertEquals("It's Ten O' clock", result);
 
-        result = numberUtilities.tellTheTime("10", "00");
+        result = timeUtil.tellTheTime("10", "00");
         System.out.println(result);
         assertEquals("It's Ten O' clock", result);
 
-        result = numberUtilities.tellTheTime(10);
+        result = timeUtil.tellTheTime(10);
         System.out.println(result);
         assertEquals("It's Ten O' clock", result);
 
-        result = numberUtilities.tellTheTime(new Time(10));
+        result = timeUtil.tellTheTime(new Time(10));
         System.out.println(result);
         assertEquals("It's Ten O' clock", result);
 
@@ -52,17 +54,17 @@ class numberUtilitiesTest {
     @Test
     void numberUtilitiesCanTellTheTimeInMinutesTest(){
        System.out.println(numberUtilities.convertAnyNumberToWords("2456543689465982735913"));
-       String result = numberUtilities.tellTheTime("10:12");
+       String result = timeUtil.tellTheTime("10:12");
         System.out.println(result);
        assertEquals("It's Ten Twelve", result);
 
 
-        result = numberUtilities.tellTheTime("10:19");
+        result = timeUtil.tellTheTime("10:19");
         System.out.println(result);
         assertEquals("It's Ten Nineteen", result);
 
 
-        result = numberUtilities.tellTheTime("12:19");
+        result = timeUtil.tellTheTime("12:19");
         System.out.println(result);
         assertEquals("It's Twelve Nineteen", result);
 
@@ -73,39 +75,39 @@ class numberUtilitiesTest {
 
     @Test
     void numberUtilitiesCanTellTheTImeCorrectlyTest(){
-        String result = numberUtilities.tellTheTime("10:35");
+        String result = timeUtil.tellTheTime("10:35");
         System.out.println(result);
         assertEquals("It's Ten Thirty-Five", result);
 
-        result = numberUtilities.tellTheTime("10 35");
+        result = timeUtil.tellTheTime("10 35");
         System.out.println(result);
         assertEquals("It's Ten Thirty-Five", result);
 
-        result = numberUtilities.tellTheTime("10.35");
+        result = timeUtil.tellTheTime("10.35");
         System.out.println(result);
         assertEquals("It's Ten Thirty-Five", result);
 
 
-        result = numberUtilities.tellTheTime("10");
+        result = timeUtil.tellTheTime("10");
         System.out.println(result);
         assertEquals("It's Ten O' clock", result);
 
 
 
 
-        result = numberUtilities.tellTheTime("11:54");
+        result = timeUtil.tellTheTime("11:54");
         System.out.println(result);
 
-result = numberUtilities.tellTheTime("12:56");
+result = timeUtil.tellTheTime("12:56");
         System.out.println(result);
-result = numberUtilities.tellTheTime("23:35");
+result = timeUtil.tellTheTime("23:35");
         System.out.println(result);
-result = numberUtilities.tellTheTime("16:23");
+result = timeUtil.tellTheTime("16:23");
         System.out.println(result);
-result = numberUtilities.tellTheTime("04:13");
+result = timeUtil.tellTheTime("04:13");
         System.out.println(result);
 
-        result = numberUtilities.tellTheTime("00:13");
+        result = timeUtil.tellTheTime("00:13");
         System.out.println(result);
 
 
@@ -114,11 +116,11 @@ result = numberUtilities.tellTheTime("04:13");
 
     @Test
     void numberUtilitiesCanTellTheTImeIfItIsTwentyFourHourTest() {
-        String result = numberUtilities.tellTheTime("13:35");
+        String result = timeUtil.tellTheTime("13:35");
         System.out.println(result);
         assertEquals("It's One Thirty-Five", result);
 
-        result = numberUtilities.tellTheTime("24:35");
+        result = timeUtil.tellTheTime("24:35");
         System.out.println(result);
         assertEquals("It's Twelve Thirty-Five", result);
 
@@ -128,11 +130,11 @@ result = numberUtilities.tellTheTime("04:13");
 
     @Test
     void numberUtilitiesCanTellTheTImeIfItIsZeroHours() {
-        String result = numberUtilities.tellTheTime("0:35");
+        String result = timeUtil.tellTheTime("0:35");
         System.out.println(result);
         assertEquals("It's Twelve Thirty-Five", result);
 
-        result = numberUtilities.tellTheTime("24:35");
+        result = timeUtil.tellTheTime("24:35");
         System.out.println(result);
         assertEquals("It's Twelve Thirty-Five", result);
 
@@ -141,7 +143,7 @@ result = numberUtilities.tellTheTime("04:13");
     @Test
     void numberUtilitiesWillNotTellTheTimeIfTheHourExceedsTwentyFour() throws Time.InvalidTimeException {
        try {
-           numberUtilities.tellTheTime("35:35");
+           timeUtil.tellTheTime("35:35");
        }
        catch (Time.InvalidTimeException exception){
            assertEquals(exception.getMessage(), "Time Entered is invalid");
@@ -151,7 +153,7 @@ result = numberUtilities.tellTheTime("04:13");
     @Test
     void numberUtilitiesWillNotTellTheTimeIfTheMinutesExceedsSixty() throws Time.InvalidTimeException {
         try {
-            numberUtilities.tellTheTime("24:65");
+            timeUtil.tellTheTime("24:65");
         }
         catch (Time.InvalidTimeException exception){
             assertEquals(exception.getMessage(), "Time Entered is invalid");
@@ -163,7 +165,7 @@ result = numberUtilities.tellTheTime("04:13");
 
     @Test
     void numberUtilitiesGraceTest() {
-        String result = numberUtilities.tellTheTime("0:00");
+        String result = timeUtil.tellTheTime("0:00");
         System.out.println(result);
         assertEquals("It's Twelve O' clock", result);
 
@@ -171,10 +173,10 @@ result = numberUtilities.tellTheTime("04:13");
 
     @Test
     void numberUtilitiesCanTellTimeCorrectlyWhenMinuteIsLessThanTenTest() {
-        String result = numberUtilities.tellTheTime("0:05");
+        String result = timeUtil.tellTheTime("0:05");
         System.out.println(result);
         assertEquals("It's Twelve O'Five", result);
-        System.out.println(numberUtilities.whatIsTheCurrentTime());
+        System.out.println(timeUtil.whatIsTheCurrentTime());
 
     }
 
@@ -245,8 +247,8 @@ result = numberUtilities.tellTheTime("04:13");
         System.out.println(result);
         assertEquals("Forty", result);
 
-        System.out.println(numberUtilities.whatIsTheCurrentTime());
-        System.out.println(numberUtilities.greetUser());
+        System.out.println(timeUtil.whatIsTheCurrentTime());
+        System.out.println(timeUtil.greetUser());
     }
 
     @Test

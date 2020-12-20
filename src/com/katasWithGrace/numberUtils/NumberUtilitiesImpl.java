@@ -1,8 +1,6 @@
 package com.katasWithGrace.numberUtils;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 public class NumberUtilitiesImpl implements NumberUtilities {
     static String[] unit = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight","Nine", "Ten" };
@@ -13,40 +11,14 @@ public class NumberUtilitiesImpl implements NumberUtilities {
 
 
 @Override
-    public String tellTheTime(String hour, String minute) {
-        return tellTheTimeHelper(new Time(hour, minute));
-    }
-
-    @Override
-    public  String tellTheTime(String time) {
-           return tellTheTimeHelper(new Time(time));
-    }
-@Override
-    public String tellTheTime(int hour, int minute) {
-    return tellTheTimeHelper(new Time(hour, minute));
-}
-    @Override
-    public  String tellTheTime(Time time){
-    return tellTheTimeHelper(time);
-    }
-
-@Override
     public  String convertNumberToWord(String userInput) {
         String[] numberWithDecimal = userInput.split("\\.");
         if (numberWithDecimal.length > 1) {
-            return NumberUtilitiesImpl.convertNumberToWordHelper(numberWithDecimal);
+            return convertNumberToWordHelper(numberWithDecimal);
         } else {
-            return NumberUtilitiesImpl.numberToWordHelper(userInput);
+            return numberToWordHelper(userInput);
         }
 
-    }
-@Override
-    public String whatIsTheCurrentTime() {
-        return tellTheTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-    }
-@Override
-    public String greetUser() {
-        return "Good " + NumberUtilitiesImpl.whatIsTheTimeOfDay(LocalTime.now().format((DateTimeFormatter.ofPattern("HH:mm")))) + " " + NumberUtilitiesImpl.whatIsTheNameOfTheOwnerOfThisComputer();
     }
 @Override
     public String convertAnyNumberToWords(String number) {
@@ -85,97 +57,23 @@ public class NumberUtilitiesImpl implements NumberUtilities {
 
     }
 
+
+
+
     @Override
-    public String tellTheTime(int hour) {
-        return tellTheTimeHelper(new Time(hour));
-    }
-
-    private static String tellTheTimeHelper(Time time) {
-        String stringTime;
-        int hour = time.getHour();
-        int minute = time.getMinute();
-        if(hour >12){
-            hour =hour %12;
-        }
-        if(hour == 0){
-            hour =12;
-        }
-
-        if(minute >0 && minute < 10){
-         stringTime =  "It's "+ convertTimeDigitsToWordHelper(hour) + " O'"+ convertTimeDigitsToWordHelper(minute);
-        }
-        else {
-
-            stringTime = "It's " + convertTimeDigitsToWordHelper(hour) + " " + convertTimeDigitsToWordHelper(minute);
-        }
-        return stringTime;
-    }
-
-    private static String convertTimeDigitsToWordHelper(int number){
-        String word = "O' clock";
-        if(number>0 && number <= 10){
-            word = convertUnitsToWords(number);
-        }
-     if(number>10){
-        return convertTensToWords(number);
-        }
-
-        return word;
-    }
-    private static String whatIsTheNameOfTheOwnerOfThisComputer(){
-         return System.getProperty("user.name");
-    }
-    private static String whatIsTheTimeOfDay(String systemTime){
-        String[] timeParts = systemTime.split(":");
-        int hour =Integer.parseInt(timeParts[0]);
-        int minutes = Integer.parseInt(timeParts[1]);
-        return whatIsTheTImeOfTheDayHelper(hour, minutes);
-    }
-
-    private static String whatIsTheTImeOfTheDayHelper(int hour, int minutes) {
-        String result;
-        boolean isNoon = hour == 12 && minutes == 0;
-        boolean isMidnight = (hour == 24 || hour ==0) && minutes == 0;
-        if(isNoon){
-            result="Noon";
-        }
-        else if(isMidnight){
-            result="Mid-Night";
-        }
-
-        else result= (whatIsTheTimeOfDayHelper(hour));
-
-        return result;
-    }
-
-    private static String whatIsTheTimeOfDayHelper(int hourOfTheDay){
-        String result ="";
-        boolean isMorning = hourOfTheDay >=0 && hourOfTheDay<12;
-        boolean isAfternoon = hourOfTheDay>=12 && hourOfTheDay<18;
-        boolean isEvening = !isMorning && !isAfternoon;
-        if(isMorning){
-            result="Morning";
-        }
-        if(isAfternoon){
-            result="Afternoon";
-        }
-        if(isEvening) {
-            result="Evening";
-        }
-    return result;
-    }
-
-    private static String convertUnitsToWords(int number){
+    public String convertUnitsToWords(int number){
         return unit[number];
     }
-    private static String convertUnitsToWords(String stringNumber){
+    private  String convertUnitsToWords(String stringNumber){
         return convertUnitsToWords(Integer.parseInt(stringNumber));
     }
-    private static String convertTensToWords(String number) {
+
+    private  String convertTensToWords(String number) {
         return convertTensToWords(Integer.parseInt(number));
     }
 
-    private static String convertTensToWords(int number) {
+    @Override
+    public  String convertTensToWords(int number) {
 
         if (String.valueOf(number).length() <= 2) {
             return convertTensToWordHelper(number);
@@ -207,7 +105,7 @@ public class NumberUtilitiesImpl implements NumberUtilities {
     }
 
 
-    private static String convertNumberToWordHelper(String[] numberWithDecimal) {
+    private  String convertNumberToWordHelper(String[] numberWithDecimal) {
         if(Integer.parseInt(numberWithDecimal[1])>0){
                 return numberToWordHelper(numberWithDecimal[0]) + " point " + numberToWordHelper(numberWithDecimal[1]);
         }
@@ -216,7 +114,7 @@ public class NumberUtilitiesImpl implements NumberUtilities {
         }
     }
 
-    private static String numberToWordHelper(String number){
+    private  String numberToWordHelper(String number){
         String numberToWord ="";
         int lengthOfNumber = number.length();
         if(lengthOfNumber== 1){
@@ -238,7 +136,7 @@ public class NumberUtilitiesImpl implements NumberUtilities {
         return numberToWord;
     }
 
-    private static String convertHundredsToWord(String userInput) {
+    private  String convertHundredsToWord(String userInput) {
         if(Integer.parseInt(userInput.substring(0,1))==0){
             return " and "+ convertTensToWords(userInput.substring(1));
         }
