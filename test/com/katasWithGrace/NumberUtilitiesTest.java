@@ -5,13 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NumberUtilitiesTest {
+class numberUtilitiesTest {
 
+    NumberUtilities numberUtilities;
     @BeforeEach
     void setUp() {
+        numberUtilities = new NumberUtilitiesImpl();
     }
 
     @AfterEach
@@ -20,25 +24,35 @@ class NumberUtilitiesTest {
 
     @Test
     void numberUtilitiesCanTellTheTimeInHoursTest(){
-       String result = NumberUtilities.tellTheTime("10:00");
+       String result = numberUtilities.tellTheTime("10 00");
         System.out.println(result);
        assertEquals("It's Ten O' clock", result);
+
+        result = numberUtilities.tellTheTime(10, 00);
+        System.out.println(result);
+        assertEquals("It's Ten O' clock", result);
+
+        result = numberUtilities.tellTheTime("10", "00");
+        System.out.println(result);
+        assertEquals("It's Ten O' clock", result);
+
 
     }
 
     @Test
     void numberUtilitiesCanTellTheTimeInMinutesTest(){
-       String result = NumberUtilities.tellTheTime("10:12");
+       System.out.println(numberUtilities.convertAnyNumberToWords("2456543689465982735913"));
+       String result = numberUtilities.tellTheTime("10:12");
         System.out.println(result);
        assertEquals("It's Ten Twelve", result);
 
 
-        result = NumberUtilities.tellTheTime("10:19");
+        result = numberUtilities.tellTheTime("10:19");
         System.out.println(result);
         assertEquals("It's Ten Nineteen", result);
 
 
-        result = NumberUtilities.tellTheTime("12:19");
+        result = numberUtilities.tellTheTime("12:19");
         System.out.println(result);
         assertEquals("It's Twelve Nineteen", result);
 
@@ -49,24 +63,24 @@ class NumberUtilitiesTest {
 
     @Test
     void numberUtilitiesCanTellTheTImeCorrectlyTest(){
-        String result = NumberUtilities.tellTheTime("10:35");
+        String result = numberUtilities.tellTheTime("10:35");
         System.out.println(result);
         assertEquals("It's Ten Thirty-Five", result);
 
 
-        result = NumberUtilities.tellTheTime("11:54");
+        result = numberUtilities.tellTheTime("11:54");
         System.out.println(result);
 
-result = NumberUtilities.tellTheTime("12:56");
+result = numberUtilities.tellTheTime("12:56");
         System.out.println(result);
-result = NumberUtilities.tellTheTime("23:35");
+result = numberUtilities.tellTheTime("23:35");
         System.out.println(result);
-result = NumberUtilities.tellTheTime("16:23");
+result = numberUtilities.tellTheTime("16:23");
         System.out.println(result);
-result = NumberUtilities.tellTheTime("04:13");
+result = numberUtilities.tellTheTime("04:13");
         System.out.println(result);
 
-        result = NumberUtilities.tellTheTime("00:13");
+        result = numberUtilities.tellTheTime("00:13");
         System.out.println(result);
 
 
@@ -75,11 +89,11 @@ result = NumberUtilities.tellTheTime("04:13");
 
     @Test
     void numberUtilitiesCanTellTheTImeIfItIsTwentyFourHourTest() {
-        String result = NumberUtilities.tellTheTime("13:35");
+        String result = numberUtilities.tellTheTime("13:35");
         System.out.println(result);
         assertEquals("It's One Thirty-Five", result);
 
-        result = NumberUtilities.tellTheTime("24:35");
+        result = numberUtilities.tellTheTime("24:35");
         System.out.println(result);
         assertEquals("It's Twelve Thirty-Five", result);
 
@@ -89,11 +103,11 @@ result = NumberUtilities.tellTheTime("04:13");
 
     @Test
     void numberUtilitiesCanTellTheTImeIfItIsZeroHours() {
-        String result = NumberUtilities.tellTheTime("0:35");
+        String result = numberUtilities.tellTheTime("0:35");
         System.out.println(result);
         assertEquals("It's Twelve Thirty-Five", result);
 
-        result = NumberUtilities.tellTheTime("24:35");
+        result = numberUtilities.tellTheTime("24:35");
         System.out.println(result);
         assertEquals("It's Twelve Thirty-Five", result);
 
@@ -101,49 +115,49 @@ result = NumberUtilities.tellTheTime("04:13");
 
     @Test
     void numberUtilitiesWillNotTellTheTimeIfTheHourExceedsTwentyFour() {
-        String result = NumberUtilities.tellTheTime("35:35");
+        String result = numberUtilities.tellTheTime("35:35");
         System.out.println(result);
-        assertEquals("Hour cannot exceed 24 hours", result);
+        assertEquals("invalid input", result);
 
     }
     @Test
     void numberUtilitiesWillNotTellTheTimeIfTheMinutesExceedsSixty() {
-        String result = NumberUtilities.tellTheTime("24:65");
+        String result = numberUtilities.tellTheTime("24:65");
         System.out.println(result);
-        assertEquals("Minutes cannot exceed sixty", result);
+        assertEquals("invalid input", result);
 
     }
 
 
     @Test
     void numberUtilitiesGraceTest() {
-        String result = NumberUtilities.tellTheTime("0:00");
+        String result = numberUtilities.tellTheTime("0:00");
         System.out.println(result);
         assertEquals("It's Twelve O' clock", result);
 
     }
 
     @Test
-    void numberUtilitiesCanTellTimeCorrectlyWhenMinuteIslessThanTenTest() {
-        String result = NumberUtilities.tellTheTime("0:05");
+    void numberUtilitiesCanTellTimeCorrectlyWhenMinuteIsLessThanTenTest() {
+        String result = numberUtilities.tellTheTime("0:05");
         System.out.println(result);
         assertEquals("It's Twelve O'Five", result);
-        System.out.println(NumberUtilities.whatIsTheCurrentTime());
+        System.out.println(numberUtilities.whatIsTheCurrentTime());
 
     }
 
     @Test
     void numberUtilitiesCanTellUnitCorrectly(){
-        String result = NumberUtilities.convertNumberToWord("3");
+        String result = numberUtilities.convertNumberToWord("3");
         System.out.println(result);
         assertEquals("Three", result);
 
 
-        result = NumberUtilities.convertNumberToWord("8");
+        result = numberUtilities.convertNumberToWord("8");
         System.out.println(result);
         assertEquals("Eight", result);
 
-        result = NumberUtilities.convertNumberToWord("0");
+        result = numberUtilities.convertNumberToWord("0");
         System.out.println(result);
         assertEquals("Zero", result);
     }
@@ -151,71 +165,80 @@ result = NumberUtilities.tellTheTime("04:13");
 
     @Test
     void numberUtilitiesCanTellTensCorrectly(){
-        String result = NumberUtilities.convertNumberToWord("12");
+        String result = numberUtilities.convertNumberToWord("12");
         System.out.println(result);
         assertEquals("Twelve", result);
 
 
-        result = NumberUtilities.convertNumberToWord("18");
+        result = numberUtilities.convertNumberToWord("18");
         System.out.println(result);
         assertEquals("Eighteen", result);
 
-        result = NumberUtilities.convertNumberToWord("10");
+        result = numberUtilities.convertNumberToWord("10");
+        System.out.println(result);
+        assertEquals("Ten", result);
+
+
+        result = numberUtilities.convertAnyNumberToWords(10L);
+        System.out.println(result);
+        assertEquals("Ten", result);
+
+        result = numberUtilities.convertAnyNumberToWords(10);
         System.out.println(result);
         assertEquals("Ten", result);
     }
 
     @Test
     void numberUtilitiesCanTellHigherTensCorrectly(){
-        String result = NumberUtilities.convertNumberToWord("35");
+        String result = numberUtilities.convertNumberToWord("35");
         System.out.println(result);
         assertEquals("Thirty-Five", result);
 
 
-        result = NumberUtilities.convertNumberToWord("42");
+        result = numberUtilities.convertNumberToWord("42");
         System.out.println(result);
         assertEquals("Forty-Two", result);
 
-        result = NumberUtilities.convertNumberToWord("85");
+        result = numberUtilities.convertNumberToWord("85");
         System.out.println(result);
         assertEquals("Eighty-Five", result);
 
 
-        result = NumberUtilities.convertNumberToWord("20");
+        result = numberUtilities.convertNumberToWord("20");
         System.out.println(result);
         assertEquals("Twenty", result);
 
 
-        result = NumberUtilities.convertNumberToWord("40");
+        result = numberUtilities.convertNumberToWord("40");
         System.out.println(result);
         assertEquals("Forty", result);
 
-        System.out.println(NumberUtilities.whatIsTheCurrentTime());
-        System.out.println(NumberUtilities.greetUser());
+        System.out.println(numberUtilities.whatIsTheCurrentTime());
+        System.out.println(numberUtilities.greetUser());
     }
 
     @Test
     void numberUtilitiesCanTellHundredCorrectly(){
-        String result = NumberUtilities.convertNumberToWord("125");
+        String result = numberUtilities.convertNumberToWord("125");
         System.out.println(result);
         assertEquals("One Hundred and Twenty-Five", result);
 
 
-        result = NumberUtilities.convertNumberToWord("530");
+        result = numberUtilities.convertNumberToWord("530");
         System.out.println(result);
         assertEquals("Five Hundred and Thirty", result);
 
-        result = NumberUtilities.convertNumberToWord("685");
+        result = numberUtilities.convertNumberToWord("685");
         System.out.println(result);
         assertEquals("Six Hundred and Eighty-Five", result);
 
 
-        result = NumberUtilities.convertNumberToWord("956");
+        result = numberUtilities.convertNumberToWord("956");
         System.out.println(result);
         assertEquals("Nine Hundred and Fifty-Six", result);
 
 
-        result = NumberUtilities.convertNumberToWord("40");
+        result = numberUtilities.convertNumberToWord("40");
         System.out.println(result);
         assertEquals("Forty", result);
 
@@ -226,56 +249,57 @@ result = NumberUtilities.tellTheTime("04:13");
 
     @Test
     void numberUtilitiesCanTellAnyNumberCorrectly(){
-        String result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(34569));
+        String result = numberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(34569));
         System.out.println(result);
         assertEquals("Thirty-Four Thousand, Five Hundred and Sixty-Nine", result);
 
 
-        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(18000000));
+        result = numberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(18000000));
         System.out.println(result);
-        assertEquals("Eighteen Million.", result);
+        assertEquals("Eighteen Million", result);
 
-        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(502));
+        result = numberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(502));
         System.out.println(result);
         assertEquals("Five Hundred and Two", result);
 
 
 
-        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(000));
+        result = numberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(0));
         System.out.println(result);
         assertEquals("Zero", result);
 
-                result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(1_502_938_593));
+                result = numberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(1_502_938_593));
         System.out.println(result);
         assertEquals("One Billion, Five Hundred and Two Million, Nine Hundred and Thirty-Eight Thousand, Five Hundred and Ninety-Three", result);
 
-        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(1_502_938_593.34));
+        result = numberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(1_502_938_593.34));
         System.out.println(result);
         assertEquals("One Billion, Five Hundred and Two Million, Nine Hundred and Thirty-Eight Thousand, Five Hundred and Ninety-Three point Thirty-Four", result);
 
-        result = NumberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(18000023));
+        result = numberUtilities.convertAnyNumberToWords(BigDecimal.valueOf(18000023));
         System.out.println(result);
         assertEquals("Eighteen Million and Twenty-Three", result);
 
 
+        result = numberUtilities.convertNumberToWord("685");
+        System.out.println(result);
+        assertEquals("Six Hundred and Eighty-Five", result);
 
-//
-//        result = NumberUtilities.convertNumberToWord("685");
-//        System.out.println(result);
-//        assertEquals("Six Hundred and Eighty-Five", result);
-//
-//
-//        result = NumberUtilities.convertNumberToWord("956");
-//        System.out.println(result);
-//        assertEquals("Nine Hundred and Fifty-Six", result);
-//
-//
-//        result = NumberUtilities.convertNumberToWord("40");
-//        System.out.println(result);
-//        assertEquals("Forty", result);
-//
-//
-//
+
+        result = numberUtilities.convertNumberToWord("956");
+        System.out.println(result);
+        assertEquals("Nine Hundred and Fifty-Six", result);
+
+
+        result = numberUtilities.convertNumberToWord("40");
+        System.out.println(result);
+        assertEquals("Forty", result);
+
+
+
+
+        LocalDate date= LocalDate.now();
+        System.out.println(date.format(DateTimeFormatter.ofPattern("dd/MMMM/yyyy")));
     }
 
 
