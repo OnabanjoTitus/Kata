@@ -60,8 +60,7 @@ public class NumberUtilitiesImpl implements NumberUtilities {
         int thousandsCounter = numberOfCommas - 2;
         try {
             for (int i = 0; i < numberOfCommas - 1; i++) {
-                convertAnyIntoWordHelper(amountToWord, numbersArray, thousandsCounter, i);
-                thousandsCounter--;
+                convertAnyIntoWordHelper(amountToWord, numbersArray, thousandsCounter--, i);
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
             return "Number is too large";

@@ -88,8 +88,10 @@ public class TimeUtilImpl implements TimeUtil{
         return result;
     }
 
-    private static String whatIsTheTImeOfTheDayHelper(int hour, int minutes) {
+    private static String whatIsTheTImeOfTheDayHelper(Time time) {
         String result;
+        int hour = time.getHour();
+        int minutes = time.getMinute();
         boolean isNoon = hour == 12 && minutes == 0;
         boolean isMidnight = (hour == 24 || hour ==0) && minutes == 0;
         if(isNoon){
@@ -107,11 +109,9 @@ public class TimeUtilImpl implements TimeUtil{
     private static String whatIsTheNameOfTheOwnerOfThisComputer(){
         return System.getProperty("user.name");
     }
-    private static String whatIsTheTimeOfDay(String systemTime){
-        String[] timeParts = systemTime.split(":");
-        int hour =Integer.parseInt(timeParts[0]);
-        int minutes = Integer.parseInt(timeParts[1]);
-        return whatIsTheTImeOfTheDayHelper(hour, minutes);
+
+    private static String whatIsTheTimeOfDay(String time){
+        return whatIsTheTImeOfTheDayHelper(new Time(time));
     }
 
 
