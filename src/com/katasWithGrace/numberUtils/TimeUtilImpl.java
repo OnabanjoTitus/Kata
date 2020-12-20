@@ -85,18 +85,14 @@ public class TimeUtilImpl implements TimeUtil{
     }
 
     private String isItMidnightOrNoon(Time time){
-        String timeOfTheDay="";
+        String timeOfTheDay;
         int hour = time.getHour();
         int minutes = time.getMinute();
         boolean isNoon = hour == 12 && minutes == 0;
         boolean isMidnight = (hour == 24 || hour ==0) && minutes == 0;
-        if(isNoon){
-            timeOfTheDay="Noon";
-        }
-        else if(isMidnight){
-            timeOfTheDay="Mid-Night";
-        }
-        else{timeOfTheDay = "It is neither";}
+        if(isNoon) timeOfTheDay="Noon";
+        else if(isMidnight) timeOfTheDay="Mid-Night";
+        else timeOfTheDay = "It is neither";
         return timeOfTheDay;
     }
 
