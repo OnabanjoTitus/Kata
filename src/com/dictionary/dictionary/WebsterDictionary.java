@@ -5,7 +5,7 @@ import java.util.List;
 
 public class WebsterDictionary extends Dictionary {
     public WebsterDictionary() throws IOException {
-        super("src/com/eagles/dependencies/webster.json");
+        super("/home/chibuzo/IdeaProjects/Implementations/src/com/dictionary/dependencies/webster.json");
     }
 
     @Override

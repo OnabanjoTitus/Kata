@@ -5,7 +5,7 @@ import java.util.List;
 
 public class QuickDictionary extends Dictionary{
     public QuickDictionary() throws IOException {
-        super("src/com/eagles/dependencies/data.json");
+        super("/home/chibuzo/IdeaProjects/Implementations/src/com/dictionary/dependencies/data.json");
     }
 
 
