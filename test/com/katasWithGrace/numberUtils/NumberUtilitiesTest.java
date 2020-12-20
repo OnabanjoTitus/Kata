@@ -1,4 +1,4 @@
-package com.katasWithGrace;
+package com.katasWithGrace.numberUtils;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -129,17 +129,24 @@ result = numberUtilities.tellTheTime("04:13");
     }
 
     @Test
-    void numberUtilitiesWillNotTellTheTimeIfTheHourExceedsTwentyFour() {
-        String result = numberUtilities.tellTheTime("35:35");
-        System.out.println(result);
-        assertEquals("invalid input", result);
+    void numberUtilitiesWillNotTellTheTimeIfTheHourExceedsTwentyFour() throws Time.InvalidTimeException {
+       try {
+           numberUtilities.tellTheTime("35:35");
+       }
+       catch (Time.InvalidTimeException exception){
+           assertEquals(exception.getMessage(), "Time Entered is invalid");
+       }
 
     }
     @Test
-    void numberUtilitiesWillNotTellTheTimeIfTheMinutesExceedsSixty() {
-        String result = numberUtilities.tellTheTime("24:65");
-        System.out.println(result);
-        assertEquals("invalid input", result);
+    void numberUtilitiesWillNotTellTheTimeIfTheMinutesExceedsSixty() throws Time.InvalidTimeException {
+        try {
+            numberUtilities.tellTheTime("24:65");
+        }
+        catch (Time.InvalidTimeException exception){
+            assertEquals(exception.getMessage(), "Time Entered is invalid");
+        }
+
 
     }
 

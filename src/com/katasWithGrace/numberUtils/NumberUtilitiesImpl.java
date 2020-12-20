@@ -1,4 +1,4 @@
-package com.katasWithGrace;
+package com.katasWithGrace.numberUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -14,48 +14,22 @@ public class NumberUtilitiesImpl implements NumberUtilities {
 
 @Override
     public String tellTheTime(String hour, String minute) {
-        return tellTheTime(Integer.parseInt(hour), Integer.parseInt(minute));
+        return tellTheTimeHelper(new Time(hour, minute));
     }
 
     @Override
     public  String tellTheTime(String time) {
-        int[] timeHourAndMinute = getHourAndMinuteFromString(time);
-        int hour = timeHourAndMinute[0];
-        int minutes = timeHourAndMinute[1];
-        return tellTheTime(hour, minutes);
-    }
-    private int[] getHourAndMinuteFromString(String time){
-
-       String[] timeArray = time.split(":");
-        if (timeArray.length < 2) {
-            timeArray = time.split("\\.");
-        }
-        if (timeArray.length < 2) {
-            timeArray = time.split(" ");
-        }
-        if (timeArray.length < 2) {
-            timeArray = new String[2];
-            timeArray[0]= time;
-            timeArray[1] = "0";
-
-        }
-
-        int[] hourAndMinute = new int[2];
-        hourAndMinute[0]= Integer.parseInt(timeArray[0]);
-        hourAndMinute[1] = Integer.parseInt(timeArray[1]);
-
-        return hourAndMinute;
+           return tellTheTimeHelper(new Time(time));
     }
 @Override
     public String tellTheTime(int hour, int minute) {
-        if (NumberUtilitiesImpl.isValidInput(hour, minute)) {
-            return NumberUtilitiesImpl.tellTheTimeHelper(hour, minute);
-        } else {
-            return "invalid input";
-        }
-
-
+    return tellTheTimeHelper(new Time(hour, minute));
+}
+    @Override
+    public  String tellTheTime(Time time){
+    return tellTheTimeHelper(time);
     }
+
 @Override
     public  String convertNumberToWord(String userInput) {
         String[] numberWithDecimal = userInput.split("\\.");
@@ -101,12 +75,8 @@ public class NumberUtilitiesImpl implements NumberUtilities {
         int thousandsCounter = numberOfCommas - 2;
         try {
             for (int i = 0; i < numberOfCommas - 1; i++) {
-
                 convertAnyIntoWordHelper(amountToWord, numbersArray, thousandsCounter, i);
-
-
                 thousandsCounter--;
-
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
             return "Number is too large";
@@ -115,34 +85,23 @@ public class NumberUtilitiesImpl implements NumberUtilities {
 
     }
 
-
-
-    private static boolean isValidInput(int hour, int minutes){
-        boolean isValidInput = true;
-        if (hour>24)
-        {
-            isValidInput= false;
-        }
-        else if(minutes>60){isValidInput= false;}
-        return isValidInput;
-
-    }
-
-    private static String tellTheTimeHelper(int hour, int minutes) {
+    private static String tellTheTimeHelper(Time time) {
         String stringTime;
+        int hour = time.getHour();
+        int minute = time.getMinute();
         if(hour >12){
-            hour = hour %12;
+            hour =hour %12;
         }
         if(hour == 0){
             hour =12;
         }
 
-        if(minutes >0 && minutes < 10){
-         stringTime =  "It's "+ convertTimeDigitsToWordHelper(hour) + " O'"+ convertTimeDigitsToWordHelper(minutes);
+        if(minute >0 && minute < 10){
+         stringTime =  "It's "+ convertTimeDigitsToWordHelper(hour) + " O'"+ convertTimeDigitsToWordHelper(minute);
         }
         else {
 
-            stringTime = "It's " + convertTimeDigitsToWordHelper(hour) + " " + convertTimeDigitsToWordHelper(minutes);
+            stringTime = "It's " + convertTimeDigitsToWordHelper(hour) + " " + convertTimeDigitsToWordHelper(minute);
         }
         return stringTime;
     }

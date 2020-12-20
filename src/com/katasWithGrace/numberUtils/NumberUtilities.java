@@ -1,4 +1,4 @@
-package com.katasWithGrace;
+package com.katasWithGrace.numberUtils;
 
 import java.math.BigDecimal;
 
@@ -8,6 +8,8 @@ public interface NumberUtilities {
     String tellTheTime(int hour, int minute);
     String whatIsTheCurrentTime();
     String greetUser();
+
+    String tellTheTime(Time time);
 
     String convertNumberToWord(String userInput);
 
