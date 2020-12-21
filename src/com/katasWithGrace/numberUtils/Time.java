@@ -77,9 +77,9 @@ public class Time {
         return hour;
     }
 
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
+//    public void setHour(int hour) {
+//        this.hour = hour;
+//    }
 
     public int getMinute() {
         return minute;
