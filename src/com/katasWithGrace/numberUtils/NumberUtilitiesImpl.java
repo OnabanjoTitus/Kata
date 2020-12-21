@@ -53,20 +53,25 @@ public class NumberUtilitiesImpl implements NumberUtilities {
 
     @Override
     public String convertAnyNumberToWords(BigDecimal number) {
+        return convertAnyNumberToWordHelper(number);
+
+    }
+
+
+    private String convertAnyNumberToWordHelper(BigDecimal number) {
         StringBuilder amountToWord = new StringBuilder();
-        String numberWithComma = String.format("%,.2f", number);
-        String[] numbersArray = numberWithComma.split(",");
-        int numberOfCommas = numbersArray.length;
-        int thousandsCounter = numberOfCommas - 2;
+        String numberSeparatedInHundredsWithComma = String.format("%,.2f", number);
+        String[] numberSplitIntoArrayByCommas = numberSeparatedInHundredsWithComma.split(",");
+        int numberOfCommas = numberSplitIntoArrayByCommas.length;
+        int thousandsArrayIterator = numberOfCommas - 2;
         try {
             for (int i = 0; i < numberOfCommas - 1; i++) {
-                convertAnyIntoWordHelper(amountToWord, numbersArray, thousandsCounter--, i);
+                convertToWord(amountToWord, numberSplitIntoArrayByCommas, thousandsArrayIterator--, i);
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
             return "Number is too large";
         }
-        return amountToWord.append(convertNumberToWord(numbersArray[numberOfCommas - 1])).toString();
-
+        return amountToWord.append(convertNumberToWord(numberSplitIntoArrayByCommas[numberOfCommas - 1])).toString();
     }
 
     private String convertUnitsToWords(int number) {
@@ -125,7 +130,7 @@ public class NumberUtilitiesImpl implements NumberUtilities {
         }
     }
 
-    private void convertAnyIntoWordHelper(StringBuilder amountToWord, String[] numbersArray, int thousandsCounter, int i) {
+    private void convertToWord(StringBuilder amountToWord, String[] numbersArray, int thousandsCounter, int i) {
         if (Integer.parseInt(numbersArray[i]) == 0) {
             amountToWord.replace(amountToWord.length() - 2, amountToWord.length(), "");
         } else {
