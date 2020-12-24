@@ -14,7 +14,7 @@ public class Main {
         //Creating the Frame
         JFrame frame = new JFrame("Number Utilities");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(250, 250);
+        frame.setSize(720, 600);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel();
@@ -69,6 +69,7 @@ public class Main {
             public void actionPerformed(ActionEvent actionEvent) {
                 if (timeRadio.isSelected()) {
                     label.setText("Enter Time");
+                    resultLabel.setText("");
 
                 }
 
@@ -80,6 +81,7 @@ public class Main {
             public void actionPerformed(ActionEvent actionEvent) {
                 if (numberRadio.isSelected()) {
                     label.setText("Enter Number");
+                    resultLabel.setText("");
 
                 }
             }
