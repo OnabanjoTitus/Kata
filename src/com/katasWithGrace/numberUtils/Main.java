@@ -2,8 +2,6 @@ package com.katasWithGrace.numberUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,6 +23,7 @@ public class Main {
         JTextField userInput = new JTextField(10);
         userInput.setFont(displayFont);
         JLabel resultLabel = new JLabel("");
+        resultLabel.setBounds(2,4,220,220);
         resultLabel.setFont(displayFont);
 
         JButton accept = new JButton("accept");
@@ -48,13 +47,17 @@ public class Main {
             if (timeRadio.isSelected()) {
                 try {
                     result = timeUtil.tellTheTime(userInput.getText());
+                   result= String.format("<html><div style=\"width:%dpx;\">%s</div></html>", 500, result);
                 } catch (Time.InvalidTimeException invalidTimeException) {
                     result = invalidTimeException.getMessage();
                 }
 
             } else {
                 try {
+
+
                     result = numberUtilities.convertAnyNumberToWords(userInput.getText());
+                    result = String.format("<html><div style=\"width:%dpx;\">%s</div></html>", 500, result);
                 } catch (NumberUtilitiesImpl.InvalidInputException invalidInputException) {
                     result = invalidInputException.getMessage();
                 }
@@ -64,26 +67,20 @@ public class Main {
         });
 
 
-        timeRadio.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (timeRadio.isSelected()) {
-                    label.setText("Enter Time");
-                    resultLabel.setText("");
-
-                }
+        timeRadio.addActionListener(actionEvent -> {
+            if (timeRadio.isSelected()) {
+                label.setText("Enter Time");
+                resultLabel.setText("");
 
             }
+
         });
 
-        numberRadio.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (numberRadio.isSelected()) {
-                    label.setText("Enter Number");
-                    resultLabel.setText("");
+        numberRadio.addActionListener(actionEvent -> {
+            if (numberRadio.isSelected()) {
+                label.setText("Enter Number");
+                resultLabel.setText("");
 
-                }
             }
         });
         //Adding Components to the frame.
