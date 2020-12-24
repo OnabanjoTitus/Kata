@@ -32,7 +32,13 @@ public class NumberUtilitiesImpl implements NumberUtilities {
 
     @Override
     public String convertAnyNumberToWords(String number) {
-        return convertAnyNumberToWords(BigDecimal.valueOf(Double.parseDouble(number)));
+        number =number.replaceAll(",", "");
+        try{
+        return convertAnyNumberToWords(BigDecimal.valueOf(Double.parseDouble(number)));}
+        catch (NumberFormatException numberFormatException){
+         throw new NumberUtilitiesImpl.InvalidInputException("Invalid Input");
+
+        }
     }
 
     @Override
@@ -148,5 +154,11 @@ public class NumberUtilitiesImpl implements NumberUtilities {
             return numberToWordHelper(userInput);
         }
 
+    }
+
+    static class InvalidInputException extends RuntimeException{
+        public InvalidInputException(String errorMessage){
+            super(errorMessage);
+        }
     }
 }

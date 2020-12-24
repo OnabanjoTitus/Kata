@@ -13,6 +13,7 @@ public class TimeUtilImpl implements TimeUtil{
 
     @Override
     public  String tellTheTime(String time) {
+        time= time.replaceAll(",",":");
         return convertTimeToWordsHelper(new Time(time));
     }
     @Override

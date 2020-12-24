@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class numberUtilitiesTest {
 
@@ -242,7 +243,33 @@ class numberUtilitiesTest {
 
     }
 
+    @Test
+    void numbersWithCommas_canBeChecked(){
+        String result = numberUtilities.convertAnyNumberToWords("1,345");
+        assertEquals("One Thousand, Three Hundred and Forty-Five", result);
+    }
+@Test
+    void time_willBeProcessedForNumbersWithOneComma(){
+    String result = timeUtil.tellTheTime("1,34");
+    assertEquals("It's One Thirty-Four", result);
+}
 
+    @Test
+    void time_willNotBeProcessedForLongNumbers(){
+        assertThrows(Time.InvalidTimeException.class,()->timeUtil.tellTheTime("10039485634")) ;
+
+    }
+
+    @Test
+    void numberUtilities_willThrowExceptionWhenLettersAreAdded(){
+        assertThrows(NumberUtilitiesImpl.InvalidInputException.class,()->numberUtilities.convertAnyNumberToWords("1003948u5634")) ;
+
+    }
+
+
+
+//@Test
+//    void time_willNotBeProcessedForNumbersWith
 
 
 

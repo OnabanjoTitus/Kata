@@ -48,8 +48,15 @@ public class Time {
             timeArray[1] = "0";
 
         }
-        int hour = Integer.parseInt(timeArray[0]);
-        int minute = Integer.parseInt(timeArray[1]);
+        int hour;
+        int minute;
+        try {
+            hour = Integer.parseInt(timeArray[0]);
+            minute = Integer.parseInt(timeArray[1]);
+        }
+        catch (NumberFormatException numberFormatException){
+            throw new InvalidTimeException("Time Entered is invalid");
+        }
         if (isValidInput(hour, minute)) {
             this.hour = hour;
             this.minute = minute;
