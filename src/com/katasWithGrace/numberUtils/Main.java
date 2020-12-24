@@ -20,10 +20,10 @@ public class Main {
         //creating panel components
         Font displayFont = new Font("Tahoma", Font.BOLD, 19);
         JLabel label = new JLabel("Enter Time");
-        JTextField userInput = new JTextField(10);
+        JTextField userInput = new JTextField(25);
         userInput.setFont(displayFont);
         JLabel resultLabel = new JLabel("");
-        resultLabel.setBounds(2,4,220,220);
+        resultLabel.setBounds(2,4,220,700);
         resultLabel.setFont(displayFont);
 
         JButton accept = new JButton("accept");
