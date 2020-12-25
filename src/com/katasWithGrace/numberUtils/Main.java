@@ -58,19 +58,25 @@ public class Main {
 
     }
     public static void initialRender(){
+
         frame.setSize(350   , 350);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userInputTextField.setFont(displayFont);
         clickMeButton.setFont(componentFont);
         labelForUserInputTextField.setFont(componentFont);
+        userResultLabel.setBackground(Color. BLACK);
+        userResultLabel.setForeground(Color.BLACK);
+
         panel.add(labelForUserInputTextField); // Components Added using Flow Layout
         panel.add(userInputTextField);
         panel.add(clickMeButton);
+        panel.setBackground(Color.GRAY);
         panel.add(userResultLabel);
         timeRadio.setFont(componentFont);
         numberRadio.setFont(componentFont);
         whatIsTheTime.setFont(componentFont);
         numberRadio.setSelected(true);
+
 
         buttonGroup.add(numberRadio);
         buttonGroup.add(timeRadio);
