@@ -23,7 +23,7 @@ public class Main {
         JTextField userInput = new JTextField(25);
         userInput.setFont(displayFont);
         JLabel resultLabel = new JLabel("");
-        resultLabel.setBounds(2,4,220,700);
+        resultLabel.setBounds(2,4,220,900);
         resultLabel.setFont(displayFont);
 
         JButton accept = new JButton("accept");
@@ -46,7 +46,7 @@ public class Main {
             String result = "";
             if (timeRadio.isSelected()) {
                 try {
-                    result = timeUtil.tellTheTime(userInput.getText());
+                   result = timeUtil.tellTheTime(userInput.getText());
                    result= String.format("<html><div style=\"width:%dpx;\">%s</div></html>", 500, result);
                 } catch (Time.InvalidTimeException invalidTimeException) {
                     result = invalidTimeException.getMessage();

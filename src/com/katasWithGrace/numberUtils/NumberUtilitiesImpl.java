@@ -34,10 +34,9 @@ public class NumberUtilitiesImpl implements NumberUtilities {
     public String convertAnyNumberToWords(String number) {
         number =number.replaceAll(",", "");
         try{
-        return convertAnyNumberToWords(BigDecimal.valueOf(Double.parseDouble(number)));}
+        return convertAnyNumberToWords(new BigDecimal(number));}
         catch (NumberFormatException numberFormatException){
          throw new NumberUtilitiesImpl.InvalidInputException("Invalid Input");
-
         }
     }
 
@@ -59,7 +58,7 @@ public class NumberUtilitiesImpl implements NumberUtilities {
 
     @Override
     public String convertAnyNumberToWords(BigDecimal number) {
-        return convertAnyNumberToWordHelper(number);
+        return convertAnyNumberToWordHelper(number)+".";
 
     }
 
