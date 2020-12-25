@@ -32,9 +32,24 @@ public class Main {
 
     private static void makeComponentsVisible(boolean makeVisible, Component... components){
         for (Component component : components) {
-            component.setVisible(makeVisible);
+            component.setVisible(true);
+            component.setEnabled(makeVisible);
         }
     }
+    private static void makeComponentsInvisibleForTime(Component... components){
+        for (Component component : components) {
+            component.setVisible(false);
+            component.setEnabled(false);
+        }
+    }
+//    private  static void makeComponentsInvisible(Component... components){
+//
+//            for (Component component: components) {
+//                component.setEnabled(false);
+//                component.setVisible(true);
+//            }
+//
+//    }
 
     public static void main(String[] args) {
 
@@ -43,7 +58,7 @@ public class Main {
 
     }
     public static void initialRender(){
-        //frame.setSize(720, 600);
+        frame.setSize(350   , 350);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userInputTextField.setFont(displayFont);
         clickMeButton.setFont(componentFont);
@@ -63,6 +78,44 @@ public class Main {
         optionsPanel.add(numberRadio);
         optionsPanel.add(whatIsTheTime);
         optionsPanel.add(timeRadio); // Components Added using Flow Layout
+
+
+        frame.getContentPane().add(BorderLayout.CENTER, panel);
+        frame.getContentPane().add(BorderLayout.PAGE_END, optionsPanel);
+        frame.setVisible(true);
+        displayResult();
+        timeRadioOnclick();
+        numberRadioOnclickHandler();
+        whatIsTheCurrentTimeOnclickHandler();
+
+
+    }
+
+    private static void whatIsTheCurrentTimeOnclickHandler() {
+        whatIsTheTime.addActionListener(actionEvent -> {
+            if(whatIsTheTime.isSelected()){
+                renderWhatIsTheTimeDisplay();
+            }
+        });
+    }
+
+    private static void numberRadioOnclickHandler() {
+        numberRadio.addActionListener(actionEvent -> {
+            if (numberRadio.isSelected()) {
+                renderNumberDisplay();
+            }
+        });
+    }
+
+    private static void timeRadioOnclick() {
+        timeRadio.addActionListener(actionEvent -> {
+            if (timeRadio.isSelected()) {
+                renderTimeDisplay();
+            }
+        });
+    }
+
+    private static void displayResult() {
         clickMeButton.addActionListener(actionEvent -> {
             String result = null;
             if (timeRadio.isSelected()) {
@@ -75,15 +128,15 @@ public class Main {
 
             }
             if(whatIsTheTime.isSelected()){
-//                result = String.format("%s%n%s", timeUtil.greetUser(), timeUtil.whatIsTheCurrentTime() );
                 result = timeUtil.greetUser() + "<br/>"+ timeUtil.whatIsTheCurrentTime();
                 result= String.format("<html><div style=\"width:%dpx;\">%s</div></html>", 150, result);
-                makeComponentsVisible(false, clickMeButton);
+                makeComponentsInvisibleForTime(clickMeButton);
             }
             if(numberRadio.isSelected()){
                 try {
                     result = numberUtilities.convertAnyNumberToWords(userInputTextField.getText());
                     result = String.format("<html><div style=\"width:%dpx;\">%s</div></html>", 500, result);
+                    frame.setSize(720, 600);
                 } catch (NumberUtilitiesImpl.InvalidInputException invalidInputException) {
                     result = invalidInputException.getMessage();
                 }
@@ -91,38 +144,14 @@ public class Main {
             userResultLabel.setText(result);
 
         });
-
-
-        timeRadio.addActionListener(actionEvent -> {
-            if (timeRadio.isSelected()) {
-                renderTimeDisplay();
-            }
-        });
-
-        numberRadio.addActionListener(actionEvent -> {
-            if (numberRadio.isSelected()) {
-                renderNumberDisplay();
-            }
-        });
-
-        whatIsTheTime.addActionListener(actionEvent -> {
-            if(whatIsTheTime.isSelected()){
-                renderWhatIsTheTimeDisplay();
-            }
-        });
-
-        frame.getContentPane().add(BorderLayout.CENTER, panel);
-        frame.getContentPane().add(BorderLayout.PAGE_END, optionsPanel);
-        frame.setVisible(true);
-
     }
 
     private static void renderWhatIsTheTimeDisplay() {
         setComponentText("Clock Application", "What is the Time", "Enter Time");
-        makeComponentsVisible(false, labelForUserInputTextField, userInputTextField, whatIsTheTime);
+        makeComponentsInvisibleForTime(labelForUserInputTextField, userInputTextField, whatIsTheTime);
         userInputTextField.setColumns(5);
         frame.setSize(350   , 350);
-        userResultLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+        userResultLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
         userResultLabel.setBounds(2,4,200,200);
         makeComponentsVisible(true, numberRadio, clickMeButton);
     }
@@ -134,10 +163,12 @@ public class Main {
         userInputTextField.setColumns(5);
         userResultLabel.setText("");
         frame.setSize(350   , 350);
-        userResultLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+        userResultLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
         userResultLabel.setBounds(2,4,200,200);
-        timeRadio.setVisible(false);
+//        timeRadio.setVisible(false);
 
+//        makeComponentsInvisible(timeRadio);
+        makeComponentsVisible(false, timeRadio);
         makeComponentsVisible(true, whatIsTheTime,numberRadio, userInputTextField, clickMeButton);
 
 
@@ -145,10 +176,12 @@ public class Main {
 
     public static void renderNumberDisplay(){
         setComponentText("Number to Words Application", "Get Words", "Enter Number");
-        userInputTextField.setColumns(20);
+        userInputTextField.setColumns(15);
         makeComponentsVisible(true, timeRadio,whatIsTheTime, userInputTextField, clickMeButton);
+//        makeComponentsInvisible(true);
         makeComponentsVisible(false, numberRadio);
-        frame.setSize(720, 600);
+
+
         userResultLabel.setBounds(2,4,220,900);
         userResultLabel.setFont(resultFont);
 
