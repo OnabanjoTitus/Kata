@@ -52,10 +52,10 @@ public class TimeUtilImpl implements TimeUtil{
         }
         boolean minutesIsLessThanTen = minute >0 && minute < 10;
         if(minutesIsLessThanTen){
-            timeInWords =  "It's "+ getWordFrom(hour) + " O'"+ getWordFrom(minute);
+            timeInWords =  ("It's "+ getWordFrom(hour)).replace(".","") + " O'"+ getWordFrom(minute);
         }
         else {
-            timeInWords = "It's " + getWordFrom(hour) + " " + getWordFrom(minute);
+            timeInWords = ("It's " + getWordFrom(hour)).replace(".", "") + " " + getWordFrom(minute);
         }
         return timeInWords;
     }
@@ -64,7 +64,7 @@ public class TimeUtilImpl implements TimeUtil{
         boolean digitsIsBetweenZeroAndFiftyNine = digit>0 && digit <=59;
         if(digitsIsBetweenZeroAndFiftyNine) return numberUtilities.convertAnyNumberToWords(digit);
 
-        else if(digit==0) return "O' clock";
+        else if(digit==0) return "O' clock.";
 
         else return "Invalid digits";
     }
