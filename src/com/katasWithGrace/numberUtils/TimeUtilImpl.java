@@ -108,7 +108,9 @@ public class TimeUtilImpl implements TimeUtil{
     }
 
     private  String whatIsTheNameOfTheOwnerOfThisComputer(){
-        return System.getProperty("user.name");
+        String userName = System.getProperty("user.name");
+       userName = userName.replace(userName.charAt(0), Character.toUpperCase(userName.charAt(0)));
+        return userName;
     }
 
     private String whatIsTheTimeOfDay(String time){
