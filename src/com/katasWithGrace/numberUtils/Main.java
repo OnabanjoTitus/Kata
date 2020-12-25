@@ -49,8 +49,7 @@ public class Main {
         renderNumberDisplay();
 
     }
-    public static void initialRender(){
-
+    private static void initialRender(){
         APPLICATION_MAIN_WINDOW.setSize(350   , 350);
         APPLICATION_MAIN_WINDOW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         USER_INPUT_TEXT_FIELD.setFont(TIME_RESULT_FONT);
@@ -58,7 +57,6 @@ public class Main {
         LABEL_FOR_USER_INPUT_TEXT_FIELD.setFont(APPLICATION_COMPONENTS_FONT);
         USER_RESULT_LABEL.setBackground(Color. BLACK);
         USER_RESULT_LABEL.setForeground(Color.BLACK);
-
         USER_INPUT_AND_OUTPUT_DISPLAY_PANEL.add(LABEL_FOR_USER_INPUT_TEXT_FIELD); // Components Added using Flow Layout
         USER_INPUT_AND_OUTPUT_DISPLAY_PANEL.add(USER_INPUT_TEXT_FIELD);
         USER_INPUT_AND_OUTPUT_DISPLAY_PANEL.add(CLICK_ME_BUTTON);
@@ -163,8 +161,6 @@ public class Main {
         renderTimeApplicationHelper();
         makeComponentsVisible(false, WHAT_IS_THE_TIME_RADIO);
         makeComponentsVisible(true, WHAT_IS_THE_CURRENT_TIME_RADIO, NUMBER_TO_WORD_RADIO, USER_INPUT_TEXT_FIELD, CLICK_ME_BUTTON);
-
-
     }
 
     public static void renderNumberDisplay(){
